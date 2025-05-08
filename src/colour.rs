@@ -24,7 +24,7 @@ mod tests {
         assert_eq!(Colour::from('g'), Colour::Green);
         assert_eq!(Colour::from('y'), Colour::Yellow);
         assert_eq!(Colour::from('x'), Colour::White);
-        assert_eq!(Colour::from('G'), Colour::White); // case-sensitive
+        assert_eq!(Colour::from('G'), Colour::White);
         assert_eq!(Colour::from(' '), Colour::White);
     }
 }

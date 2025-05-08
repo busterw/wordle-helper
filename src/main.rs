@@ -49,7 +49,7 @@ fn word_matches(word: &str, guess: &Vec<LetterColour>) -> bool {
         match letter.colour {
             Colour::Green => {
                 if chars[i] != letter.letter {
-                    return false;
+                    return false; //no greens at all
                 }
             }
             _ => {}
