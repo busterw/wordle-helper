@@ -1,7 +1,7 @@
 use rusqlite::{params, Connection, Error, Result};
 use std::{env, path::PathBuf};
 
-use crate::Letter;
+use crate::LetterColour;
 
 pub fn get_all_words() -> Vec<String> {
     let mut db_path = env::current_dir().unwrap();
@@ -26,3 +26,5 @@ pub fn get_all_words() -> Vec<String> {
 
     words
 }
+
+
