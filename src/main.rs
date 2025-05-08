@@ -1,7 +1,6 @@
-use colored::Colorize;
 use colour::Colour;
 use std::io::{self, Write};
-use words_db::{get_all_words, populate_db_from_file};
+use words_db::get_all_words;
 mod colour;
 mod words_db;
 
@@ -26,12 +25,12 @@ fn main() {
 
         for word in matching_words {
             println!("{}", word)
-        } 
+        }
     }
 }
 
 pub fn get_matching_words(guess: &Vec<LetterColour>) -> Vec<String> {
-    let all_words = get_all_words(); // from your working code
+    let all_words = get_all_words();
     let mut results = Vec::new();
 
     for word in all_words {
@@ -67,11 +66,11 @@ fn word_matches(word: &str, guess: &Vec<LetterColour>) -> bool {
 
     for (i, letter) in guess.iter().enumerate() {
         if let Colour::White = letter.colour {
-            let is_used_elsewhere = guess.iter().enumerate().any(|(j, other)|
-                j != i &&
-                (other.colour == Colour::Green || other.colour == Colour::Yellow) &&
-                other.letter == letter.letter
-            );
+            let is_used_elsewhere = guess.iter().enumerate().any(|(j, other)| {
+                j != i
+                    && (other.colour == Colour::Green || other.colour == Colour::Yellow)
+                    && other.letter == letter.letter
+            });
 
             if !is_used_elsewhere && chars.contains(&letter.letter) {
                 return false;

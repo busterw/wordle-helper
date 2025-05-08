@@ -1,7 +1,5 @@
-use rusqlite::{params, Connection, Error, Result};
-use std::{env, fs::File, io::{BufRead, BufReader}, path::PathBuf};
-
-use crate::LetterColour;
+use rusqlite::Connection;
+use std::env;
 
 pub fn get_all_words() -> Vec<String> {
     let mut db_path = env::current_dir().unwrap();
@@ -27,29 +25,27 @@ pub fn get_all_words() -> Vec<String> {
     words
 }
 
-pub fn populate_db_from_file(file_path: &str) -> Result<()> {
-    let mut db_path = env::current_dir().unwrap();
-    db_path.push("words.db3");
+// pub fn populate_db_from_file(file_path: &str) -> Result<()> {
+//     let mut db_path = env::current_dir().unwrap();
+//     db_path.push("words.db3");
 
-    let mut conn = Connection::open(db_path)?;
+//     let mut conn = Connection::open(db_path)?;
 
-    conn.execute("DELETE FROM words", [])?;
+//     conn.execute("DELETE FROM words", [])?;
 
-    let file = File::open(file_path).unwrap();
-    let reader = BufReader::new(file);
+//     let file = File::open(file_path).unwrap();
+//     let reader = BufReader::new(file);
 
-    let tx = conn.transaction()?; // use transaction for speed
+//     let tx = conn.transaction()?; // use transaction for speed
 
-    for line in reader.lines() {
-        let word = line.unwrap().trim().to_lowercase();
+//     for line in reader.lines() {
+//         let word = line.unwrap().trim().to_lowercase();
 
-        if word.len() == 5 && word.chars().all(|c| c.is_ascii_alphabetic()) {
-            tx.execute("INSERT OR IGNORE INTO words (word) VALUES (?)", [&word])?;
-        }
-    }
+//         if word.len() == 5 && word.chars().all(|c| c.is_ascii_alphabetic()) {
+//             tx.execute("INSERT OR IGNORE INTO words (word) VALUES (?)", [&word])?;
+//         }
+//     }
 
-    tx.commit()?;
-    Ok(())
-}
-
-
+//     tx.commit()?;
+//     Ok(())
+// }
