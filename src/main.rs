@@ -1,7 +1,7 @@
 use colored::Colorize;
 use colour::Colour;
 use std::io::{self, Write};
-use words_db::get_all_words;
+use words_db::{get_all_words, populate_db_from_file};
 mod colour;
 mod words_db;
 
@@ -14,7 +14,7 @@ fn main() {
 
         io::stdin().read_line(&mut input).unwrap();
 
-        let letters: Vec<LetterColour> = input
+        let guess_letters: Vec<LetterColour> = input
             .split(",")
             .map(|x| LetterColour {
                 letter: x.chars().nth(0).unwrap(),
@@ -22,7 +22,11 @@ fn main() {
             })
             .collect();
 
-        let matching_words = get_matching_words(&letters);
+        let matching_words = get_matching_words(&guess_letters);
+
+        for word in matching_words {
+            println!("{}", word)
+        } 
     }
 }
 
