@@ -1,7 +1,9 @@
-use std::io::{self, Write};
 use colored::Colorize;
 use colour::Colour;
+use words_db::get_all_words;
+use std::io::{self, Write};
 mod colour;
+mod words_db;
 
 fn main() {
     loop {
@@ -20,12 +22,10 @@ fn main() {
             })
             .collect();
 
-        for letter in letters {
-            match letter.colour {
-                Colour::White => print!("{}",letter.letter.to_string().white()),
-                Colour::Yellow => print!("{}",letter.letter.to_string().yellow()),
-                Colour::Green => print!("{}",letter.letter.to_string().green()),
-            }
+        let words_from_db = get_all_words();
+
+        for word in words_from_db {
+            println!("{}", word)
         }
     }
 }
@@ -34,5 +34,3 @@ pub struct Letter {
     letter: char,
     colour: Colour,
 }
-
-impl Colour {}
