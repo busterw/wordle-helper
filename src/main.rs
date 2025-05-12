@@ -5,6 +5,8 @@ mod colour;
 mod words_db;
 
 fn main() {
+    let mut white_letters: Vec<LetterColour> = Vec::new();
+
     loop {
         print!("$ ");
         io::stdout().flush().unwrap();
@@ -21,7 +23,18 @@ fn main() {
             })
             .collect();
 
-        let matching_words = get_matching_words(&guess_letters);
+        let white_guess_letters: Vec<LetterColour> = guess_letters
+            .iter()
+            .filter(|x| x.colour == Colour::White)
+            .cloned()
+            .collect();
+
+        white_letters.extend(white_guess_letters);
+
+        let mut full_guess = guess_letters.clone();
+        full_guess.extend(white_letters.iter().cloned());
+
+        let matching_words = get_matching_words(&full_guess);
 
         for word in matching_words {
             println!("{}", word)
@@ -81,6 +94,7 @@ fn word_matches(word: &str, guess: &Vec<LetterColour>) -> bool {
     true
 }
 
+#[derive(Clone)]
 pub struct LetterColour {
     letter: char,
     colour: Colour,
